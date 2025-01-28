@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "map-issue",
+    "slug": "map-issue",
+    "newArchEnabled": true,
+    "version": "1.0.1",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [],
+    "android": {
+      "versionCode": 1011,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.map.location",
+      "config": {
+        "googleMaps": {
+          "apiKey": ""
+        }
+      }
+    },
+    "extra": {},
+    "ios": {
+      "bundleIdentifier": "com.map.location"
+    }
+  }
+}

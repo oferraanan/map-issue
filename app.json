@@ -20,7 +20,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.map.location",
+      "package": "com.map.issue",
       "config": {
         "googleMaps": {
           "apiKey": ""
@@ -29,7 +29,7 @@
     },
     "extra": {},
     "ios": {
-      "bundleIdentifier": "com.map.location"
+      "bundleIdentifier": "com.map.issue"
     }
   }
 }

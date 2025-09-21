@@ -20,7 +20,7 @@ export default function App() {
         if (appTimerId) clearInterval(appTimerId);
         appTimerId = setInterval(() => {
             setAppTimerTime((previousTime) => previousTime + 1);
-        }, 1000);
+        }, 100);
     }
 
     const onMapReady = async () => {

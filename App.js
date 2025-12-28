@@ -55,6 +55,14 @@ export default function App() {
                 showsUserLocation={true}
                 onMapReady={onMapReady}
             >
+                <Marker key={'main_marker'}
+                        zIndex={99}
+                        coordinate={{latitude: 32.2,
+                            longitude: 34.8,}}
+                        anchor={{x: 0.5, y: 0.5}}
+                        title={'Initial'}
+                >
+                </Marker>
                 {addMarkers && markers?.length > 0 &&
                     markers.map((m, i) => {
                         return (

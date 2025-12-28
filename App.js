@@ -56,7 +56,7 @@ export default function App() {
                 onMapReady={onMapReady}
             >
                 <Marker key={'main_marker'}
-                        zIndex={1}
+                        zIndex={5}
                         coordinate={{
                             latitude: 32.2,
                             longitude: 34.8,

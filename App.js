@@ -56,7 +56,7 @@ export default function App() {
                 onMapReady={onMapReady}
             >
                 <Marker key={'main_marker'}
-                        zIndex={2}
+                        zIndex={1}
                         coordinate={{
                             latitude: 32.2,
                             longitude: 34.8,
@@ -70,7 +70,7 @@ export default function App() {
                     markers.map((m, i) => {
                         return (
                             <Marker key={'marker_' + i}
-                                    zIndex={3}
+                                    zIndex={2}
                                     coordinate={m.coordinate}
                                     anchor={{x: 0.5, y: 0.5}}
                                     title={m.title}

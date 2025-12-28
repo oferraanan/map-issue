@@ -14,7 +14,7 @@ export default function App() {
     const [addMarkers, setAddMarkers] = useState(true);
     const [markers, setMarkers] = useState([]);
 
-    const [appTimerTime, setAppTimerTime] = useState(0)
+    const [appTimerTime, setAppTimerTime] = useState(1)
 
     const startAppTimer = () => {
         if (appTimerId) clearInterval(appTimerId);
@@ -30,7 +30,7 @@ export default function App() {
 
     function addMarker() {
         markersList.push({
-            title: 'Added ' + new Date().toLocaleTimeString(),
+            title: appTimerTime + '. Added ' + new Date().toLocaleTimeString(),
             coordinate: {
                 latitude: 32.2 + appTimerTime / 10,
                 longitude: 34.8 + appTimerTime / 10,
@@ -56,10 +56,13 @@ export default function App() {
                 onMapReady={onMapReady}
             >
                 <Marker key={'main_marker'}
-                        zIndex={99}
-                        coordinate={{latitude: 32.2,
-                            longitude: 34.8,}}
+                        zIndex={2}
+                        coordinate={{
+                            latitude: 32.2,
+                            longitude: 34.8,
+                        }}
                         anchor={{x: 0.5, y: 0.5}}
+                        pinColor={'blue'}
                         title={'Initial'}
                 >
                 </Marker>
@@ -67,7 +70,7 @@ export default function App() {
                     markers.map((m, i) => {
                         return (
                             <Marker key={'marker_' + i}
-                                    zIndex={99}
+                                    zIndex={3}
                                     coordinate={m.coordinate}
                                     anchor={{x: 0.5, y: 0.5}}
                                     title={m.title}

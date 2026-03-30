@@ -16,7 +16,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "plugins": [],
+    "plugins": [
+      "expo-font"
+    ],
     "android": {
       "versionCode": 1011,
       "adaptiveIcon": {

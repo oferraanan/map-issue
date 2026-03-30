@@ -1,8 +1,7 @@
 export default [
     {
         name: 'Map',
-        title: 'Map',
-        iconType: 'Feather',
+        title: 'Map Issue',
         iconName: 'map'
     }
 ]

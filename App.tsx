@@ -29,14 +29,11 @@ const App = () => {
                                 title: drawer.title,
                                 drawerLabel: drawer.name,
                                 drawerIcon: ({focused}) =>
-                                    drawer.iconType === 'Feather' ?
-                                        <MaterialCommunityIcons
-                                            name={drawer.iconName as React.ComponentProps<typeof MaterialCommunityIcons>["name"]}
-                                            size={24}
-                                            color={focused ? "#e91e63" : "black"}
-                                        />
-                                        :
-                                        null
+                                    <MaterialCommunityIcons
+                                        name={drawer.iconName as React.ComponentProps<typeof MaterialCommunityIcons>["name"]}
+                                        size={24}
+                                        color={focused ? "#e91e63" : "black"}
+                                    />
                             }}
                             children={() => {
                                 return drawer.name === 'Map' ?

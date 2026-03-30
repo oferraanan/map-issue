@@ -30,7 +30,7 @@ export default function App() {
         if (appTimerId) clearInterval(appTimerId);
         appTimerId = setInterval(() => {
             setAppTimerTime((previousTime) => previousTime + 1);
-        }, 100);
+        }, 1000);
     }
 
     const onMapReady = async () => {
@@ -42,8 +42,8 @@ export default function App() {
         markersList.push({
             title: appTimerTime + '. Added ' + new Date().toLocaleTimeString(),
             coordinate: {
-                latitude: 32.2 + appTimerTime / 10,
-                longitude: 34.8 + appTimerTime / 10,
+                latitude: 32.2 + appTimerTime / 4,
+                longitude: 34.8 + appTimerTime / 4,
             }
         })
     }

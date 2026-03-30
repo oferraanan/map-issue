@@ -1,7 +1,7 @@
 // noinspection JSValidateTypes
 
 import {View, Text, StyleSheet} from "react-native";
-import MapView, {Marker} from "react-native-maps";
+import MapView, {Marker, Polyline} from "react-native-maps";
 import {useEffect, useState} from "react";
 import {Checkbox} from "expo-checkbox";
 
@@ -86,6 +86,19 @@ export default function App() {
                                     title={m.title}
                             >
                             </Marker>
+                        )
+                    })
+                }
+                {addMarkers && markers?.length > 0 &&
+                    markers.map((m, i) => {
+                        return (
+                            <Polyline key={'line_' + i}
+                                      zIndex={2}
+                                      coordinates={[markers[i > 0 ? i - 1 : 0].coordinate, m.coordinate]}
+                                      strokeColor="magenta"
+                                      strokeWidth={4}
+                            >
+                            </Polyline>
                         )
                     })
                 }

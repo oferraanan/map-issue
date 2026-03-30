@@ -2,9 +2,12 @@
   "expo": {
     "name": "map-issue",
     "slug": "map-issue",
-    "newArchEnabled": true,
     "version": "1.0.1",
     "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "experiments": {
+      "reactCompiler": true
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

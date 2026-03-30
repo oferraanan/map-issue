@@ -9,25 +9,15 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "babel-preset-expo": "^54.0.9",
-    "expo": "^54.0.30",
-    "expo-checkbox": "~5.0.8",
-    "expo-dev-client": "~6.0.20",
-    "react": "19.1.0",
-    "react-native": "~0.81.5",
-    "react-native-maps": "1.20.1"
+    "expo": "~55.0.9",
+    "expo-checkbox": "~55.0.3",
+    "expo-dev-client": "~55.0.19",
+    "react": "19.2.0",
+    "react-native": "~0.83.4",
+    "react-native-maps": "1.27.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.4"
   },
   "expo": {
-    "doctor": {
-      "reactNativeDirectoryCheck": {
-        "exclude": [
-          "react-native-maps",
-          "expo-checkbox"
-        ]
-      }
-    }
   }
 }

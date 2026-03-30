@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "es2022",
+    "target": "es2022"
+  },
+  "extends": "expo/tsconfig.base"
+}

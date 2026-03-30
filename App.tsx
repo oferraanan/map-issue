@@ -6,13 +6,23 @@ import {useEffect, useState} from "react";
 import {Checkbox} from "expo-checkbox";
 
 let isDebug = true;
-let appTimerId = null;
-let markersList = [];
+let appTimerId: any = null;
+let markersList: Marker[] = [];
+
+export type LatLng = {
+    latitude: number;
+    longitude: number;
+};
+
+export type Marker = {
+    title: string;
+    coordinate: LatLng;
+};
 
 export default function App() {
 
     const [addMarkers, setAddMarkers] = useState(true);
-    const [markers, setMarkers] = useState([]);
+    const [markers, setMarkers] = useState<Marker[]>([]);
 
     const [appTimerTime, setAppTimerTime] = useState(1)
 

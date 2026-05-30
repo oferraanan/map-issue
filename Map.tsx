@@ -25,7 +25,7 @@ const Map = () => {
 
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    // ✅ stable timer (no re-creation)
+    // ✅ stable timer
     useEffect(() => {
         timerRef.current = setInterval(() => {
             setAppTimerTime((t) => t + 1);
@@ -36,7 +36,7 @@ const Map = () => {
         };
     }, []);
 
-    // ✅ stable marker creation (NO global array, NO mutation)
+    // ✅ stable marker creation
     useEffect(() => {
         const newMarker: MapMarker = {
             title: `${appTimerTime}. Added ${new Date().toLocaleTimeString()}`,
@@ -49,7 +49,7 @@ const Map = () => {
         setMarkers((prev) => [...prev, newMarker]);
     }, [appTimerTime]);
 
-    // ✅ memoized polylines (Android-safe)
+    // ✅ memoized polylines
     const polylines = useMemo(() => {
         if (!addMarkers || markers.length < 2) return null;
 
@@ -67,7 +67,7 @@ const Map = () => {
         });
     }, [markers, addMarkers]);
 
-    // ✅ memoized markers (stable identity)
+    // ✅ memoized markers
     const renderedMarkers = useMemo(() => {
         if (!addMarkers) return null;
 

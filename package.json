@@ -10,24 +10,24 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.1.1",
-    "@react-navigation/drawer": "^7.9.8",
-    "@react-navigation/native": "^7.0.2",
-    "expo": "~55.0.9",
-    "expo-checkbox": "~55.0.3",
-    "expo-font": "~55.0.4",
-    "expo-dev-client": "~55.0.19",
+    "@react-navigation/drawer": "^7.10.3",
+    "@react-navigation/native": "^7.2.5",
+    "expo": "~55.0.26",
+    "expo-checkbox": "~55.0.4",
+    "expo-dev-client": "~55.0.35",
+    "expo-font": "~55.0.8",
     "react": "19.2.0",
-    "react-native": "~0.83.4",
+    "react-native": "0.83.6",
     "react-native-gesture-handler": "~2.30.1",
     "react-native-maps": "1.27.2",
     "react-native-reanimated": "4.2.1",
     "react-native-safe-area-context": "~5.6.2",
     "react-native-screens": "~4.23.0",
-    "react-native-worklets": "0.7.2"
+    "react-native-worklets": "0.7.4"
   },
   "devDependencies": {
-    "@types/react": "~19.2.10",
-    "typescript": "~5.9.2"
+    "@types/react": "~19.2.15",
+    "typescript": "^5.9.3"
   },
   "expo": {}
 }

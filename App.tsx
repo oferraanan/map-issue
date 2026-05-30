@@ -8,6 +8,10 @@ import React from "react";
 
 const Drawer = createDrawerNavigator();
 
+const drawerComponents: Record<string, React.ComponentType<any>> = {
+    'Map': Map,
+};
+
 const App = () => {
 
     return (
@@ -16,33 +20,32 @@ const App = () => {
                 //id={'DrawerNavigator'}
                 initialRouteName="Map"
                 backBehavior={'firstRoute'}
+                detachInactiveScreens={false}
                 screenOptions={{
-                    drawerType: "front"
+                    drawerType: 'front',
+                    freezeOnBlur: false,
                 }}
             >
                 {
-                    MenuItems.map((drawer) =>
-                        <Drawer.Screen
-                            key={drawer.name}
-                            name={drawer.name}
-                            options={{
-                                title: drawer.title,
-                                drawerLabel: drawer.name,
-                                drawerIcon: ({focused}) =>
-                                    <MaterialCommunityIcons
-                                        name={drawer.iconName as React.ComponentProps<typeof MaterialCommunityIcons>["name"]}
-                                        size={24}
-                                        color={focused ? "#e91e63" : "black"}
-                                    />
-                            }}
-                            children={() => {
-                                return drawer.name === 'Map' ?
-                                    <Map/>
-                                    : null
-                            }
-                            }
-                        />
-                    )
+                    MenuItems.map((drawer) => {
+                        return (
+                            <Drawer.Screen
+                                key={drawer.name}
+                                name={drawer.name}
+                                component={drawerComponents[drawer.name]}
+                                options={{
+                                    title: drawer.title,
+                                    drawerLabel: drawer.name,
+                                    drawerIcon: ({focused}) =>
+                                        <MaterialCommunityIcons
+                                            name={drawer.iconName as React.ComponentProps<typeof MaterialCommunityIcons>["name"]}
+                                            size={24}
+                                            color={focused ? "#e91e63" : "black"}
+                                        />
+                                }}
+                            />
+                        );
+                    })
                 }
             </Drawer.Navigator>
         </NavigationContainer>

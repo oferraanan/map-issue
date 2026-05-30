@@ -1,128 +1,146 @@
 import {View, Text, StyleSheet} from "react-native";
 import MapView, {Marker, Polyline} from "react-native-maps";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState, useCallback, useMemo} from "react";
 import {Checkbox} from "expo-checkbox";
-
-let isDebug = true;
-let appTimerId: any = null;
-let markersList: Marker[] = [];
 
 export type LatLng = {
     latitude: number;
     longitude: number;
 };
 
-export type Marker = {
+export type MapMarker = {
     title: string;
     coordinate: LatLng;
 };
 
+const INITIAL_COORD = {
+    latitude: 32.2,
+    longitude: 34.8,
+};
+
 const Map = () => {
-
     const [addMarkers, setAddMarkers] = useState(true);
-    const [markers, setMarkers] = useState<Marker[]>([]);
+    const [markers, setMarkers] = useState<MapMarker[]>([]);
+    const [appTimerTime, setAppTimerTime] = useState(1);
 
-    const [appTimerTime, setAppTimerTime] = useState(1)
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    const startAppTimer = () => {
-        if (appTimerId) clearInterval(appTimerId);
-        appTimerId = setInterval(() => {
-            setAppTimerTime((previousTime) => previousTime + 1);
-        }, 1000);
-    }
-
-    const onMapReady = async () => {
-        isDebug && console.log(new Date(), 'onMapReady');
-        startAppTimer();
-    };
-
-    function addMarker() {
-        markersList.push({
-            title: appTimerTime + '. Added ' + new Date().toLocaleTimeString(),
-            coordinate: {
-                latitude: 32.2 + appTimerTime / 4,
-                longitude: 34.8 + appTimerTime / 4,
-            }
-        })
-    }
-
+    // ✅ stable timer (no re-creation)
     useEffect(() => {
-        addMarker();
-        setMarkers(markersList);
+        timerRef.current = setInterval(() => {
+            setAppTimerTime((t) => t + 1);
+        }, 1000);
+
+        return () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+        };
+    }, []);
+
+    // ✅ stable marker creation (NO global array, NO mutation)
+    useEffect(() => {
+        const newMarker: MapMarker = {
+            title: `${appTimerTime}. Added ${new Date().toLocaleTimeString()}`,
+            coordinate: {
+                latitude: INITIAL_COORD.latitude + appTimerTime / (200 * Math.sin(appTimerTime) + 400),
+                longitude: INITIAL_COORD.longitude + appTimerTime / (200 * Math.cos(appTimerTime) + 400),
+            },
+        };
+
+        setMarkers((prev) => [...prev, newMarker]);
     }, [appTimerTime]);
 
+    // ✅ memoized polylines (Android-safe)
+    const polylines = useMemo(() => {
+        if (!addMarkers || markers.length < 2) return null;
+
+        return markers.slice(1).map((m, i) => {
+            const prev = markers[i];
+
+            return (
+                <Polyline
+                    key={`line_${i}`}
+                    coordinates={[prev.coordinate, m.coordinate]}
+                    strokeColor="magenta"
+                    strokeWidth={4}
+                />
+            );
+        });
+    }, [markers, addMarkers]);
+
+    // ✅ memoized markers (stable identity)
+    const renderedMarkers = useMemo(() => {
+        if (!addMarkers) return null;
+
+        return markers.map((m, i) => (
+            <Marker
+                key={`marker_${i}`}
+                coordinate={m.coordinate}
+                title={m.title}
+                anchor={{x: 0.5, y: 0.5}}
+            />
+        ));
+    }, [markers, addMarkers]);
+
+    const onMapReady = useCallback(() => {
+        console.log(new Date(), "onMapReady");
+    }, []);
+
     return (
-        <View
-            style={styles.header}
-        >
+        <View style={styles.header}>
             <MapView
-                style={{
-                    width: "100%",
-                    height: "80%",
-                }}
+                style={styles.map}
                 showsUserLocation={true}
                 onMapReady={onMapReady}
+                showsCompass={true}
+                zoomControlEnabled={true}
+                toolbarEnabled={true}
+                showsScale={true}
+                initialRegion={{
+                    ...INITIAL_COORD,
+                    latitudeDelta: 0.05,
+                    longitudeDelta: 0.05,
+                }}
             >
-                <Marker key={'main_marker'}
-                        zIndex={5}
-                        coordinate={{
-                            latitude: 32.2,
-                            longitude: 34.8,
-                        }}
-                        anchor={{x: 0.5, y: 0.5}}
-                        pinColor={'blue'}
-                        title={'Initial'}
-                >
-                </Marker>
-                {addMarkers && markers?.length > 0 &&
-                    markers.map((m, i) => {
-                        return (
-                            <Marker key={'marker_' + i}
-                                    zIndex={2}
-                                    coordinate={m.coordinate}
-                                    anchor={{x: 0.5, y: 0.5}}
-                                    title={m.title}
-                            >
-                            </Marker>
-                        )
-                    })
-                }
-                {addMarkers && markers?.length > 0 &&
-                    markers.map((m, i) => {
-                        return (
-                            <Polyline key={'line_' + i}
-                                      zIndex={2}
-                                      coordinates={[markers[i > 0 ? i - 1 : 0].coordinate, m.coordinate]}
-                                      strokeColor="magenta"
-                                      strokeWidth={4}
-                            >
-                            </Polyline>
-                        )
-                    })
-                }
+                {/* fixed main marker */}
+                <Marker
+                    coordinate={INITIAL_COORD}
+                    pinColor="blue"
+                    title="Initial"
+                />
+
+                {renderedMarkers}
+                {polylines}
             </MapView>
-            <Text style={{
-                padding: 10,
-                fontWeight: 'bold',
-                height: 50,
-            }}>
-                {'Show Markers'}
-            </Text>
-            <Checkbox
-                value={addMarkers}
-                onValueChange={(value) => setAddMarkers(value)}
-                color={addMarkers ? 'blue' : undefined}
-            />
+
+            <View style={styles.controls}>
+                <Text style={styles.text}>Show Markers and Polylines </Text>
+                <Checkbox
+                    value={addMarkers}
+                    onValueChange={setAddMarkers}
+                />
+            </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     header: {
         flex: 1,
-        justifyContent: "center",
+        backgroundColor: "oldlace",
+    },
+    map: {
+        flex: 1,
+    },
+    controls: {
+        height: 60,
+        flexDirection: "row",
         alignItems: "center",
-        backgroundColor: 'oldlace'
+        justifyContent: "center",
+        gap: 10,
+    },
+    text: {
+        fontWeight: "bold",
     },
 });
+
 export default Map;

@@ -1,6 +1,5 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import MenuItems from "./MenuItems";
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Map from "./Map";
 
@@ -11,6 +10,14 @@ const Drawer = createDrawerNavigator();
 const drawerComponents: Record<string, React.ComponentType<any>> = {
     'Map': Map,
 };
+
+const MenuItems = [
+    {
+        name: 'Map',
+        title: 'Map Issue Expo 55 Map',
+        iconName: 'map'
+    }
+]
 
 const App = () => {
 

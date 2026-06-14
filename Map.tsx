@@ -38,6 +38,7 @@ const Map = () => {
 
     // ✅ stable marker creation
     useEffect(() => {
+        if(appTimerTime > 10) return;
         const newMarker: MapMarker = {
             title: `${appTimerTime}. Added ${new Date().toLocaleTimeString()}`,
             coordinate: {

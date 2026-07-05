@@ -24,10 +24,8 @@ const App = () => {
     return (
         <NavigationContainer>
             <Drawer.Navigator
-                //id={'DrawerNavigator'}
                 initialRouteName="Map"
                 backBehavior={'firstRoute'}
-                detachInactiveScreens={false}
                 screenOptions={{
                     drawerType: 'front',
                     freezeOnBlur: false,
